@@ -1,0 +1,45 @@
+{
+  "name": "signal-atlas-web",
+  "version": "0.1.0",
+  "description": "Signal Atlas private news discovery app",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --webpack",
+    "build": "next build --webpack",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "fetch-feeds": "tsx scripts/fetch-feeds.ts",
+    "cluster-stories": "tsx scripts/cluster-stories.ts",
+    "recompute-scores": "tsx scripts/recompute-scores.ts",
+    "seed-demo-data": "tsx scripts/seed-demo-data.ts"
+  },
+  "keywords": [
+    "nextjs",
+    "supabase",
+    "rss",
+    "news"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.99.1",
+    "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
+    "dotenv": "^17.3.1",
+    "next": "^16.1.6",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "rss-parser": "^3.13.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "eslint": "^9.39.4",
+    "eslint-config-next": "^16.1.6",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}
