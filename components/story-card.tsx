@@ -8,7 +8,30 @@ import { formatRelativeTime } from "@/lib/utils";
 interface StoryCardProps {
   story: ClusteredStory;
   saved: boolean;
-  variant?: "radar" | "overlooked" | "saved";
+  variant?: "radar" | "overlooked" | "potential" | "saved";
+}
+
+function getScoreLabel(variant: string) {
+  if (variant === "overlooked") return "Overlooked";
+  if (variant === "potential") return "Potential";
+  return "Radar";
+}
+
+function getScoreValue(story: ClusteredStory, variant: string) {
+  if (variant === "overlooked") return story.overlookedScore;
+  if (variant === "potential") return story.potentialScore;
+  return story.radarScore;
+}
+
+function getNoteLabel(variant: string) {
+  if (variant === "overlooked") return "Why overlooked";
+  if (variant === "potential") return "Why potential";
+  return "Why this matters";
+}
+
+function getNoteText(story: ClusteredStory, variant: string) {
+  if (variant === "overlooked") return story.overlookedReason;
+  return story.whyItMatters;
 }
 
 export function StoryCard({
@@ -16,21 +39,26 @@ export function StoryCard({
   saved,
   variant = "radar",
 }: StoryCardProps) {
-  const emphasis =
-    variant === "overlooked" ? story.overlookedReason : story.whyItMatters;
-
   return (
     <article className="story-card">
       <div className="story-card-topline">
         <div className="story-score-block">
           <span className="story-score-label">
-            {variant === "overlooked" ? "Overlooked" : "Radar"}
+            {getScoreLabel(variant)}
           </span>
           <strong className="story-score-value">
-            {variant === "overlooked" ? story.overlookedScore : story.radarScore}
+            {getScoreValue(story, variant)}
           </strong>
         </div>
-        <SaveStoryButton storyId={story.id} initialSaved={saved} />
+        <div className="story-badges">
+          {story.isWireDriven && (
+            <span className="story-badge wire-badge">Wire-driven</span>
+          )}
+          {!story.isWireDriven && story.sourceCount >= 2 && (
+            <span className="story-badge independent-badge">Independent</span>
+          )}
+          <SaveStoryButton storyId={story.id} initialSaved={saved} />
+        </div>
       </div>
 
       <div className="story-card-header">
@@ -38,6 +66,9 @@ export function StoryCard({
           <span>{story.topic}</span>
           <span>{story.region}</span>
           <span>{freshnessBand(story.lastUpdatedAt)}</span>
+          {story.entityTags && story.entityTags.length > 0 && (
+            <span className="entity-tag">{story.entityTags[0]}</span>
+          )}
         </div>
         <h2 className="story-card-title">
           <Link href={`/story/${story.id}`}>{story.clusterTitle}</Link>
@@ -66,15 +97,21 @@ export function StoryCard({
 
       <div className="story-card-note">
         <span className="story-note-label">
-          {variant === "overlooked" ? "Why overlooked" : "Why this matters"}
+          {getNoteLabel(variant)}
         </span>
-        <p>{emphasis}</p>
+        <p>{getNoteText(story, variant)}</p>
       </div>
 
       <div className="story-card-footer">
         <span>
           {story.majorSourceCount} major outlet
           {story.majorSourceCount === 1 ? "" : "s"}
+          {story.municipalitySpread && story.municipalitySpread > 1
+            ? ` · ${story.municipalitySpread} municipalities`
+            : ""}
+          {story.regionSpread && story.regionSpread > 1
+            ? ` · ${story.regionSpread} regions`
+            : ""}
         </span>
         <Link href={`/story/${story.id}`} className="story-card-link">
           Open story

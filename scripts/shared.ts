@@ -2,7 +2,7 @@ import { existsSync } from "node:fs";
 
 import { config as loadDotEnv } from "dotenv";
 
-import { buildClusterRecord } from "../lib/cluster";
+import { recomputeClusterKeepingId } from "../lib/cluster";
 import { FEED_SOURCES } from "../lib/feeds";
 import { getSupabaseAdmin } from "../lib/supabase";
 import type { ArticleRecord, ClusteredStory, SourceRecord } from "../lib/types";
@@ -37,6 +37,14 @@ export function sourceToRow(source: SourceRecord) {
     region: source.region,
     language: source.language,
     is_major: source.isMajor,
+    tier: source.tier ?? 3,
+    source_type: source.sourceType ?? "national_daily",
+    country: source.country ?? "",
+    source_region: source.region,
+    source_language: source.language,
+    is_public_service: source.isPublicService ?? false,
+    municipality: source.municipality ?? null,
+    ownership_group: source.ownershipGroup ?? null,
   };
 }
 
@@ -72,10 +80,18 @@ export function clusterToRow(cluster: ClusteredStory) {
     international_source_count: cluster.internationalSourceCount,
     radar_score: cluster.radarScore,
     overlooked_score: cluster.overlookedScore,
+    potential_score: cluster.potentialScore ?? 0,
     topic: cluster.topic,
     region: cluster.region,
     why_it_matters: cluster.whyItMatters,
+    overlooked_reason: cluster.overlookedReason,
     representative_article_id: cluster.representativeArticleId,
+    score_breakdown: cluster.scoreBreakdown ?? {},
+    is_wire_driven: cluster.isWireDriven ?? false,
+    entity_tags: cluster.entityTags ?? [],
+    country: cluster.country ?? "",
+    municipality_spread: cluster.municipalitySpread ?? 0,
+    region_spread: cluster.regionSpread ?? 0,
     created_at: cluster.createdAt,
     updated_at: cluster.updatedAt,
   };
@@ -304,11 +320,4 @@ export async function readClusterMembershipFromDb() {
   }));
 }
 
-export function recomputeClusterKeepingId(clusterId: string, articles: ArticleRecord[]) {
-  const recomputed = buildClusterRecord(articles);
-
-  return {
-    ...recomputed,
-    id: clusterId,
-  };
-}
+export { recomputeClusterKeepingId as recomputeClusterKeepingId };

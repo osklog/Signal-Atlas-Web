@@ -1,0 +1,28 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/ingest",
+      "schedule": "*/20 * * * *"
+    },
+    {
+      "path": "/api/cron/recluster",
+      "schedule": "5,25,45 * * * *"
+    },
+    {
+      "path": "/api/cron/score",
+      "schedule": "10,30,50 * * * *"
+    },
+    {
+      "path": "/api/cron/recluster?full=1",
+      "schedule": "0 */4 * * *"
+    },
+    {
+      "path": "/api/cron/archive",
+      "schedule": "0 3 * * *"
+    },
+    {
+      "path": "/api/cron/health",
+      "schedule": "0 8 * * *"
+    }
+  ]
+}

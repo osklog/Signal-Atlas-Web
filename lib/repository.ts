@@ -7,7 +7,6 @@ import {
   SAVED_STORIES_COOKIE,
 } from "@/lib/config";
 import { buildDemoDataset } from "@/lib/demo-data";
-import { buildOverlookedReason } from "@/lib/why-it-matters";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import type {
   ArticleRecord,
@@ -66,8 +65,16 @@ function sortClusters(clusters: ClusteredStory[], sortBy: StoryQueryOptions["sor
       if (right.overlookedScore === left.overlookedScore) {
         return right.radarScore - left.radarScore;
       }
-
       return right.overlookedScore - left.overlookedScore;
+    });
+  }
+
+  if (sortBy === "potential") {
+    return [...clusters].sort((left, right) => {
+      if (right.potentialScore === left.potentialScore) {
+        return right.radarScore - left.radarScore;
+      }
+      return right.potentialScore - left.potentialScore;
     });
   }
 
@@ -75,7 +82,6 @@ function sortClusters(clusters: ClusteredStory[], sortBy: StoryQueryOptions["sor
     if (right.radarScore === left.radarScore) {
       return right.lastUpdatedAt.localeCompare(left.lastUpdatedAt);
     }
-
     return right.radarScore - left.radarScore;
   });
 }
@@ -102,6 +108,10 @@ function filterClusters(
     }
 
     if (options.region && cluster.region !== options.region) {
+      return false;
+    }
+
+    if (options.country && cluster.country !== options.country) {
       return false;
     }
 
@@ -279,26 +289,22 @@ async function fetchLiveClusters(): Promise<ClusteredStory[]> {
       internationalSourceCount: row.international_source_count as number,
       radarScore: row.radar_score as number,
       overlookedScore: row.overlooked_score as number,
+      potentialScore: (row.potential_score as number) ?? 0,
       topic: row.topic as string,
       region: row.region as string,
       whyItMatters: row.why_it_matters as string,
-      overlookedReason:
-        buildOverlookedReason({
-          articleCount: articles.length,
-          sourceCount: row.source_count as number,
-          majorSourceCount: row.major_source_count as number,
-          internationalSourceCount: row.international_source_count as number,
-          firstSeenAt: row.first_seen_at as string,
-          lastUpdatedAt: row.last_updated_at as string,
-          topic: row.topic as string,
-          region: row.region as string,
-          articles,
-        }) ?? "",
+      overlookedReason: (row.overlooked_reason as string) ?? "",
       representativeArticleId: row.representative_article_id as string,
       topSourceNames,
       articles,
       createdAt: row.created_at as string,
       updatedAt: row.updated_at as string,
+      scoreBreakdown: (row.score_breakdown as Record<string, Record<string, number>>) ?? {},
+      isWireDriven: (row.is_wire_driven as boolean) ?? false,
+      entityTags: (row.entity_tags as string[]) ?? [],
+      country: (row.country as string) ?? "",
+      municipalitySpread: (row.municipality_spread as number) ?? 0,
+      regionSpread: (row.region_spread as number) ?? 0,
     };
   });
 }
@@ -315,7 +321,18 @@ async function resolveLiveSnapshot(options: StoryQueryOptions): Promise<StoryCol
 }
 
 async function resolveDemoSnapshot(options: StoryQueryOptions): Promise<StoryCollection> {
-  const { clusters } = buildDemoDataset();
+  const { clusters: rawClusters } = buildDemoDataset();
+  // Ensure demo clusters have V2 fields
+  const clusters = rawClusters.map((c) => ({
+    ...c,
+    potentialScore: c.potentialScore ?? 0,
+    scoreBreakdown: c.scoreBreakdown ?? {},
+    isWireDriven: c.isWireDriven ?? false,
+    entityTags: c.entityTags ?? [],
+    country: c.country ?? "",
+    municipalitySpread: c.municipalitySpread ?? 0,
+    regionSpread: c.regionSpread ?? 0,
+  }));
   const savedStoryIds = await readSavedStoryIdsFromCookie();
 
   return {

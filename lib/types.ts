@@ -1,4 +1,4 @@
-export type StorySortKey = "radar" | "overlooked";
+export type StorySortKey = "radar" | "overlooked" | "potential";
 
 export interface SourceRecord {
   id: string;
@@ -9,6 +9,12 @@ export interface SourceRecord {
   region: string;
   language: string;
   isMajor: boolean;
+  tier?: number;
+  sourceType?: string;
+  country?: string;
+  isPublicService?: boolean;
+  municipality?: string;
+  ownershipGroup?: string;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -52,6 +58,7 @@ export interface ClusteredStory {
   internationalSourceCount: number;
   radarScore: number;
   overlookedScore: number;
+  potentialScore: number;
   topic: string;
   region: string;
   whyItMatters: string;
@@ -61,12 +68,20 @@ export interface ClusteredStory {
   articles: ArticleRecord[];
   createdAt: string;
   updatedAt: string;
+  // V2 fields
+  scoreBreakdown?: Record<string, Record<string, number>>;
+  isWireDriven?: boolean;
+  entityTags?: string[];
+  country?: string;
+  municipalitySpread?: number;
+  regionSpread?: number;
 }
 
 export interface StoryQueryOptions {
   sortBy?: StorySortKey;
   topic?: string;
   region?: string;
+  country?: string;
   savedOnly?: boolean;
   limit?: number;
 }
@@ -120,4 +135,7 @@ export interface StoryScoreContext {
   region: string;
   topic: string;
   articles: ArticleRecord[];
+  // V2 fields
+  entities?: string[];
+  isWireDriven?: boolean;
 }
