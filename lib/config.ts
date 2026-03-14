@@ -13,7 +13,17 @@ export function isDemoModeForced() {
 }
 
 export function getConfiguredMode(): "demo" | "live" {
-  if (isDemoModeForced() || !hasSupabaseConfig()) {
+  if (isDemoModeForced()) {
+    console.warn("[Signal Atlas] Demo mode forced via NEXT_PUBLIC_DEMO_MODE=true");
+    return "demo";
+  }
+
+  if (!hasSupabaseConfig()) {
+    console.warn(
+      "[Signal Atlas] Missing Supabase config — falling back to demo mode.",
+      `NEXT_PUBLIC_SUPABASE_URL: ${process.env.NEXT_PUBLIC_SUPABASE_URL ? "set" : "MISSING"}`,
+      `SUPABASE_SERVICE_ROLE_KEY: ${process.env.SUPABASE_SERVICE_ROLE_KEY ? "set" : "MISSING"}`,
+    );
     return "demo";
   }
 
