@@ -8,6 +8,32 @@ import { formatAbsoluteTime, formatRelativeTime } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
+function ScoreBreakdownPanel({ breakdown }: { breakdown: Record<string, Record<string, number>> }) {
+  const sections = Object.entries(breakdown);
+  if (sections.length === 0) return null;
+
+  return (
+    <section className="breakdown-section">
+      <p className="eyebrow">Score breakdown</p>
+      <div className="breakdown-grid">
+        {sections.map(([model, factors]) => (
+          <div key={model} className="breakdown-card">
+            <span className="breakdown-model">{model}</span>
+            <dl className="breakdown-factors">
+              {Object.entries(factors).map(([factor, value]) => (
+                <div key={factor} className="breakdown-factor">
+                  <dt>{factor.replace(/_/g, " ")}</dt>
+                  <dd>{value}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export default async function StoryDetailPage({
   params,
 }: {
@@ -38,7 +64,20 @@ export default async function StoryDetailPage({
               <span>{story.topic}</span>
               <span>{story.region}</span>
               <span>{story.sourceCount} sources</span>
+              {story.isWireDriven && (
+                <span className="story-badge wire-badge">Wire-driven</span>
+              )}
+              {!story.isWireDriven && story.sourceCount >= 2 && (
+                <span className="story-badge independent-badge">Independent</span>
+              )}
             </div>
+            {story.entityTags && story.entityTags.length > 0 && (
+              <div className="entity-tag-row">
+                {story.entityTags.slice(0, 5).map((tag) => (
+                  <span key={tag} className="entity-tag">{tag}</span>
+                ))}
+              </div>
+            )}
             <h1>{story.clusterTitle}</h1>
             <p className="story-detail-summary">{story.summary}</p>
           </div>
@@ -57,6 +96,10 @@ export default async function StoryDetailPage({
             <p>{story.overlookedReason}</p>
           </article>
         </section>
+
+        {story.scoreBreakdown && Object.keys(story.scoreBreakdown).length > 0 && (
+          <ScoreBreakdownPanel breakdown={story.scoreBreakdown} />
+        )}
 
         <section className="article-list-section">
           <div className="section-heading-row">

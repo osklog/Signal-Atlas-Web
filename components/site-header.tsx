@@ -17,6 +17,7 @@ export function SiteHeader() {
       <nav className="site-nav" aria-label="Primary navigation">
         <NavLink href="/" label="Radar" />
         <NavLink href="/overlooked" label="Overlooked" />
+        <NavLink href="/sweden" label="Sverige" />
         <NavLink href="/saved" label="Saved" />
       </nav>
     </header>

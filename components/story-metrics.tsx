@@ -10,6 +10,7 @@ export function StoryMetrics({ story }: StoryMetricsProps) {
   const metrics = [
     { label: "Radar", value: String(story.radarScore) },
     { label: "Overlooked", value: String(story.overlookedScore) },
+    { label: "Potential", value: String(story.potentialScore) },
     { label: "Sources", value: String(story.sourceCount) },
     { label: "Major outlets", value: String(story.majorSourceCount) },
     {
@@ -30,6 +31,13 @@ export function StoryMetrics({ story }: StoryMetricsProps) {
       )}`,
     },
   ];
+
+  if (story.municipalitySpread && story.municipalitySpread > 0) {
+    metrics.push({ label: "Municipality spread", value: String(story.municipalitySpread) });
+  }
+  if (story.regionSpread && story.regionSpread > 1) {
+    metrics.push({ label: "Region spread", value: String(story.regionSpread) });
+  }
 
   return (
     <section className="metrics-grid" aria-label="Story metrics">

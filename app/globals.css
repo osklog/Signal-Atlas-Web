@@ -611,6 +611,338 @@ a:focus-visible {
   }
 }
 
+/* ─── Story badges ──────────────────────────────────────────── */
+
+.story-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.story-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.wire-badge {
+  border: 1px solid rgba(255, 160, 80, 0.3);
+  background: rgba(255, 160, 80, 0.1);
+  color: #f0a050;
+}
+
+.independent-badge {
+  border: 1px solid rgba(100, 200, 140, 0.3);
+  background: rgba(100, 200, 140, 0.1);
+  color: var(--success);
+}
+
+/* ─── Entity tags ───────────────────────────────────────────── */
+
+.entity-tag {
+  background: rgba(140, 170, 220, 0.12) !important;
+  border-color: rgba(140, 170, 220, 0.25) !important;
+  color: #a0bce0 !important;
+  font-size: 0.82rem !important;
+}
+
+.entity-tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.entity-tag-row .entity-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(140, 170, 220, 0.25);
+  background: rgba(140, 170, 220, 0.12);
+  color: #a0bce0;
+  font-size: 0.82rem;
+}
+
+/* ─── Score breakdown ───────────────────────────────────────── */
+
+.breakdown-section {
+  display: grid;
+  gap: 12px;
+}
+
+.breakdown-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.breakdown-card {
+  display: grid;
+  gap: 8px;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.breakdown-model {
+  text-transform: capitalize;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--accent);
+}
+
+.breakdown-factors {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+}
+
+.breakdown-factor {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.breakdown-factor dt {
+  color: var(--muted);
+  font-size: 0.78rem;
+  text-transform: capitalize;
+}
+
+.breakdown-factor dd {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+/* ─── Sweden desk tabs ──────────────────────────────────────── */
+
+.sweden-tabs {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  background: var(--bg-elevated);
+}
+
+.sweden-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  border-radius: 14px;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--muted);
+  border: 1px solid transparent;
+  text-decoration: none;
+}
+
+.sweden-tab:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.sweden-tab-active {
+  border-color: rgba(241, 197, 146, 0.3);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+/* ─── Debug page ────────────────────────────────────────────── */
+
+.debug-section {
+  display: grid;
+  gap: 14px;
+  padding: 22px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  background: var(--panel);
+}
+
+.debug-heading {
+  margin: 0;
+  font-family: var(--font-editorial), serif;
+  font-size: 1.6rem;
+}
+
+.debug-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+.debug-stat {
+  display: grid;
+  gap: 4px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.debug-stat-label {
+  color: var(--muted);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.debug-stat strong {
+  font-size: 1.3rem;
+}
+
+.debug-bar-chart {
+  display: grid;
+  gap: 6px;
+}
+
+.debug-bar {
+  min-width: 60px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(241, 197, 146, 0.15);
+  border: 1px solid rgba(241, 197, 146, 0.2);
+  font-size: 0.82rem;
+  color: var(--accent);
+}
+
+.debug-cluster-list {
+  display: grid;
+  gap: 6px;
+}
+
+.debug-cluster-item {
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.02);
+  overflow: hidden;
+}
+
+.debug-cluster-summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 0.88rem;
+}
+
+.debug-cluster-summary:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.debug-cluster-size {
+  min-width: 80px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.debug-cluster-title {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.debug-cluster-scores {
+  color: var(--muted);
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.debug-badge {
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.debug-badge.wire {
+  background: rgba(255, 160, 80, 0.15);
+  color: #f0a050;
+}
+
+.debug-badge.se {
+  background: rgba(80, 160, 255, 0.15);
+  color: #80b0ff;
+}
+
+.debug-cluster-detail {
+  padding: 12px 14px;
+  border-top: 1px solid var(--line);
+}
+
+.debug-entities {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+.debug-breakdown {
+  margin: 0 0 10px;
+  padding: 10px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.3);
+  font-size: 0.75rem;
+  color: var(--muted);
+  overflow-x: auto;
+}
+
+.debug-article-list {
+  display: grid;
+  gap: 4px;
+}
+
+.debug-article-row {
+  display: flex;
+  gap: 12px;
+  padding: 6px 0;
+  font-size: 0.82rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.debug-article-source {
+  min-width: 120px;
+  color: var(--accent);
+}
+
+.debug-article-title {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.debug-article-time {
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.debug-cluster-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  font-size: 0.82rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.debug-cluster-row .debug-cluster-size {
+  min-width: 30px;
+  text-align: right;
+}
+
 @media (max-width: 720px) {
   .app-shell {
     width: min(100% - 20px, 1320px);

@@ -1,6 +1,6 @@
 import Parser from "rss-parser";
 
-import { FEED_SOURCES } from "../lib/feeds";
+import { EDITORIAL_FEED_SOURCES } from "../lib/feeds";
 import { normalizeFeedItem } from "../lib/normalize";
 import type { RawFeedItem } from "../lib/types";
 import { getSupabaseAdmin } from "../lib/supabase";
@@ -21,7 +21,7 @@ async function main() {
   await upsertSources();
 
   const results = await Promise.allSettled(
-    FEED_SOURCES.map(async (source) => {
+    EDITORIAL_FEED_SOURCES.map(async (source) => {
       const feed = await parser.parseURL(source.feedUrl);
       const articles = (feed.items ?? [])
         .slice(0, limitPerFeed)

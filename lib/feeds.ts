@@ -1,176 +1,41 @@
 import type { FeedSource } from "@/lib/types";
+import { ALL_SOURCES } from "@/lib/sources-metadata";
 
-export const FEED_SOURCES: FeedSource[] = [
-  {
-    id: "source_bbc_world",
-    slug: "bbc-world",
-    name: "BBC World",
-    feedUrl: "https://feeds.bbci.co.uk/news/world/rss.xml",
-    homepageUrl: "https://www.bbc.com/news/world",
-    region: "Europe",
-    language: "en",
-    isMajor: true,
-  },
-  {
-    id: "source_al_jazeera",
-    slug: "al-jazeera",
-    name: "Al Jazeera",
-    feedUrl: "https://www.aljazeera.com/xml/rss/all.xml",
-    homepageUrl: "https://www.aljazeera.com",
-    region: "Middle East",
-    language: "en",
-    isMajor: true,
-  },
-  {
-    id: "source_guardian_world",
-    slug: "guardian-world",
-    name: "The Guardian World",
-    feedUrl: "https://www.theguardian.com/world/rss",
-    homepageUrl: "https://www.theguardian.com/world",
-    region: "Europe",
-    language: "en",
-    isMajor: true,
-  },
-  {
-    id: "source_dw",
-    slug: "dw-world",
-    name: "DW",
-    feedUrl: "https://rss.dw.com/rdf/rss-en-all",
-    homepageUrl: "https://www.dw.com/en/top-stories/s-9097",
-    region: "Europe",
-    language: "en",
-    isMajor: true,
-  },
-  {
-    id: "source_france24",
-    slug: "france24",
-    name: "France 24",
-    feedUrl: "https://www.france24.com/en/rss",
-    homepageUrl: "https://www.france24.com/en/",
-    region: "Europe",
-    language: "en",
-    isMajor: true,
-  },
-  {
-    id: "source_npr_world",
-    slug: "npr-world",
-    name: "NPR World",
-    feedUrl: "https://feeds.npr.org/1004/rss.xml",
-    homepageUrl: "https://www.npr.org/sections/world/",
-    region: "North America",
-    language: "en",
-    isMajor: true,
-  },
-  {
-    id: "source_pbs",
-    slug: "pbs-newshour",
-    name: "PBS NewsHour",
-    feedUrl: "https://www.pbs.org/newshour/feeds/rss/headlines",
-    homepageUrl: "https://www.pbs.org/newshour/world",
-    region: "North America",
-    language: "en",
-    isMajor: true,
-  },
-  {
-    id: "source_cbs_world",
-    slug: "cbs-world",
-    name: "CBS World",
-    feedUrl: "https://www.cbsnews.com/latest/rss/world",
-    homepageUrl: "https://www.cbsnews.com/world/",
-    region: "North America",
-    language: "en",
-    isMajor: true,
-  },
-  {
-    id: "source_cnn_world",
-    slug: "cnn-world",
-    name: "CNN World",
-    feedUrl: "https://rss.cnn.com/rss/edition_world.rss",
-    homepageUrl: "https://edition.cnn.com/world",
-    region: "North America",
-    language: "en",
-    isMajor: true,
-  },
-  {
-    id: "source_cbc_world",
-    slug: "cbc-world",
-    name: "CBC World",
-    feedUrl: "https://www.cbc.ca/webfeed/rss/rss-world",
-    homepageUrl: "https://www.cbc.ca/news/world",
-    region: "North America",
-    language: "en",
-    isMajor: false,
-  },
-  {
-    id: "source_straits_times_world",
-    slug: "straits-times-world",
-    name: "The Straits Times World",
-    feedUrl: "https://www.straitstimes.com/news/world/rss.xml",
-    homepageUrl: "https://www.straitstimes.com/world",
-    region: "Asia",
-    language: "en",
-    isMajor: false,
-  },
-  {
-    id: "source_the_hindu_world",
-    slug: "the-hindu-international",
-    name: "The Hindu International",
-    feedUrl: "https://www.thehindu.com/news/international/feeder/default.rss",
-    homepageUrl: "https://www.thehindu.com/news/international/",
-    region: "Asia",
-    language: "en",
-    isMajor: false,
-  },
-  {
-    id: "source_dawn",
-    slug: "dawn-home",
-    name: "Dawn",
-    feedUrl: "https://www.dawn.com/feeds/home",
-    homepageUrl: "https://www.dawn.com/world",
-    region: "Asia",
-    language: "en",
-    isMajor: false,
-  },
-  {
-    id: "source_jerusalem_post",
-    slug: "jerusalem-post-world",
-    name: "The Jerusalem Post",
-    feedUrl: "https://www.jpost.com/Rss/RssFeedsWorldNews",
-    homepageUrl: "https://www.jpost.com/international",
-    region: "Middle East",
-    language: "en",
-    isMajor: false,
-  },
-  {
-    id: "source_japan_times_world",
-    slug: "japan-times-world",
-    name: "The Japan Times",
-    feedUrl: "https://www.japantimes.co.jp/news_category/world/feed/",
-    homepageUrl: "https://www.japantimes.co.jp/news/world/",
-    region: "Asia",
-    language: "en",
-    isMajor: false,
-  },
-  {
-    id: "source_toi_world",
-    slug: "times-of-india-world",
-    name: "Times of India World",
-    feedUrl: "https://timesofindia.indiatimes.com/rssfeeds/296589292.cms",
-    homepageUrl: "https://timesofindia.indiatimes.com/world",
-    region: "Asia",
-    language: "en",
-    isMajor: false,
-  },
-  {
-    id: "source_kyiv_independent",
-    slug: "kyiv-independent",
-    name: "The Kyiv Independent",
-    feedUrl: "https://kyivindependent.com/feed/",
-    homepageUrl: "https://kyivindependent.com",
-    region: "Europe",
-    language: "en",
-    isMajor: false,
-  },
-];
+/**
+ * Build feed sources from the centralized source metadata.
+ * Only includes sources that have a feedUrl defined.
+ */
+function buildFeedSources(): FeedSource[] {
+  return ALL_SOURCES
+    .filter((meta) => meta.feedUrl)
+    .map((meta) => ({
+      id: `source_${meta.slug}`,
+      slug: meta.slug,
+      name: meta.name,
+      feedUrl: meta.feedUrl!,
+      homepageUrl: meta.homepageUrl ?? null,
+      region: meta.region,
+      language: meta.language,
+      isMajor: meta.isMajor,
+      tier: meta.tier,
+      sourceType: meta.type,
+      country: meta.country,
+      isPublicService: meta.isPublicService,
+      municipality: meta.municipality,
+      ownershipGroup: meta.ownershipGroup,
+    }));
+}
+
+export const FEED_SOURCES = buildFeedSources();
+
+/** Only editorial (non-institutional) RSS feeds for the main ingest loop */
+export const EDITORIAL_FEED_SOURCES = FEED_SOURCES.filter(
+  (s) => s.sourceType !== "institutional",
+);
+
+/** Institutional RSS feeds for separate ingest */
+export const INSTITUTIONAL_FEED_SOURCES = FEED_SOURCES.filter(
+  (s) => s.sourceType === "institutional",
+);
 
 export const FEED_SOURCE_MAP = new Map(FEED_SOURCES.map((source) => [source.id, source]));
