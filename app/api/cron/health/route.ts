@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 
+import { getConfiguredMode, hasSupabaseConfig, isDemoModeForced } from "@/lib/config";
 import { EDITORIAL_FEED_SOURCES } from "@/lib/feeds";
 import { getSupabaseAdmin } from "@/lib/supabase";
 
@@ -10,6 +11,23 @@ export async function GET(request: Request) {
     authHeader !== `Bearer ${process.env.CRON_SECRET}`
   ) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const mode = getConfiguredMode();
+  const envStatus = {
+    mode,
+    demoModeForced: isDemoModeForced(),
+    supabaseUrlSet: Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL),
+    serviceRoleKeySet: Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY),
+    hasSupabaseConfig: hasSupabaseConfig(),
+  };
+
+  if (mode === "demo") {
+    return NextResponse.json({
+      ok: false,
+      reason: "Running in demo mode — Supabase is not configured or demo mode is forced.",
+      ...envStatus,
+    });
   }
 
   try {
@@ -50,6 +68,7 @@ export async function GET(request: Request) {
 
     return NextResponse.json({
       ok: true,
+      ...envStatus,
       totalArticlesLast24h: recentArticles?.length ?? 0,
       activeSources: activeSources.length,
       silentSources,
